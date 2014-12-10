@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		<p:tabMenu activeIndex="#{param.i}">
+			<p:menuitem value="Novo" outcome="visitante.jsf"
+				icon="ui-icon-person">
+				<f:param name="i" value="1" />
+			</p:menuitem>
+
+			<p:menuitem value="Lista" outcome="visitantelista.jsf"
+				icon="ui-icon-search">
+				<f:param name="i" value="0" />
+			</p:menuitem>
+		</p:tabMenu>
+		<h2 style="margin-top: 0" align="center">Atualizar Dados do
+			Visitante</h2>
+		<p:panel>
+			<p:accordionPanel>
+			<p:messages />
+				<p:tab title="Dados Pessoais">
+					<h:panelGrid columns="3">
+						<h:outputText value="Nome:"></h:outputText>
+						<p:inputText id="Nomedialog" value="#{VisitanteControl.visitante.nome}"
+						required="true" requiredMessage="campo nome é obrigatório" ></p:inputText>
+						<p:message for="Nomedialog" />
+						<h:outputText value="Cpf:"></h:outputText>
+						<p:inputMask id="cpfdialog" value="#{VisitanteControl.visitante.cpf}" mask="999.999.999-99"
+						required="true" requiredMessage="campo cpf é obrigatório"></p:inputMask>
+						<p:message for="cpfdialog" />
+						<h:outputText value="Telefone:"></h:outputText>
+						<p:inputMask id="telefonedialog" value="#{VisitanteControl.visitante.telefone}"
+							mask="(99)9999-9999" required="true" requiredMessage="campo telefone é obrigatório"></p:inputMask>
+						<p:message for="telefonedialog" />
+						<h:outputText value="Parentesco:"></h:outputText>
+						<h:inputText value="#{VisitanteControl.visitante.parentesco}" maxlength="40"
+						id="parentescodialog" required="true" requiredMessage="campo telefone é obrigatório"></h:inputText>
+						<p:message for="parentescodialog" />
+					</h:panelGrid>
+				</p:tab>
+				
+				<p:tab title="Endereço">
+					<h:panelGrid columns="3">
+						<h:outputText value="Logradouro:"></h:outputText>
+						<h:inputText value="#{VisitanteControl.visitante.endereco.logradouro}" id="logradouro"
+						required="true" requiredMessage="campo logradouro é obrigatório"></h:inputText>
+						<p:message for="logradouro" />
+						<h:outputText value="Complemento:"></h:outputText>
+						<h:inputText value="#{VisitanteControl.visitante.endereco.complemento}" id="complemento"
+						required="true" requiredMessage="campo complemento é obrigatório"></h:inputText>
+						<p:message for="complemento" />
+						<h:outputText value="Setor:"></h:outputText>
+						<h:inputText value="#{VisitanteControl.visitante.endereco.setor}" id="setor"
+						required="true" requiredMessage="campo setor é obrigatório"></h:inputText>
+						<p:message for="setor" />
+						<h:outputText value="Cidade:"></h:outputText>
+						<h:inputText maxlength="40" value="#{VisitanteControl.visitante.endereco.cidade}" id="cidade"
+						required="true" requiredMessage="campo cidade é obrigatório"></h:inputText>
+						<p:message for="cidade" />
+						<h:outputText value="Estado:"></h:outputText>
+						<h:inputText maxlength="2" value="#{VisitanteControl.visitante.endereco.estado}" id="estado"
+						required="true" requiredMessage="campo estado é obrigatório"></h:inputText>
+						<p:message for="estado" />
+						<h:outputText value="Cep:"></h:outputText>
+						<p:inputMask id="Cep" value="#{VisitanteControl.visitante.endereco.cep}"
+							required="true" requiredMessage="campo cep é obrigatório" mask="99999-999"></p:inputMask>
+							<p:message for="Cep" />
+					</h:panelGrid>
+
+				</p:tab>
+			</p:accordionPanel>
+			<h:panelGrid columns="2">
+				<p:commandButton actionListener="#{VisitanteControl.AtualizarDados}"
+					value="Confirmar" action="visitantelista.jsf"></p:commandButton>
+				<p:commandButton actionListener="#{VisitanteControl.CancelarUpdate}"
+					value="Cancelar" action="visitantelista.jsf" ajax="false"></p:commandButton>
+			</h:panelGrid>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>

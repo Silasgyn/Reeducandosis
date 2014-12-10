@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<link href="css/bootstrap.css" rel="stylesheet" />
+	<link href="css/bootstrap-responsive.css" rel="stylesheet" />
+	<link href="css/styles.css" rel="stylesheet" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Cache-Control"
+		content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</h:head>
+<h:body>
+
+	<div class="header">
+		<div class="container">
+			<div class="row branding">
+				<div class="span6">
+					<h1 class="pull-left">
+						<a href="inicio.jsf"><strong>ReeducandoSis</strong></a>
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<p align="right" style="padding-right: 60px; font-size: large;" >
+		<p:commandLink value="[Sair]" id="indexSair"
+			oncomplete="javascript:location.reload(true)"
+			actionListener="#{LoginControl.logout}"></p:commandLink>
+	</p>
+
+	<h:form id="formCorpo">
+		<p align="center">
+			<a href="reeducandolista.jsf"> <h:graphicImage
+					value="imagens/iconreed.png" alt="Reeducando"
+					style="padding-top: 60px" width="220" border="0" align="center"
+					title="Reeducando" />
+			</a> <a href="visitantelista.jsf">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp; <h:graphicImage
+					value="imagens/iconvisitante.png" alt="Visitante"
+					style="padding-top: 60px" width="500" border="0" align="center"
+					title="Visitante" />
+			</a>
+		</p>
+		<p:growl autoUpdate="true"></p:growl>
+		<ui:insert name="corpo" />
+	</h:form>
+
+</h:body>
+</html>

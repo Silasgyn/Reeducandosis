@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="corpo">
+
+		<p:tabMenu activeIndex="#{param.i}">
+			<p:menuitem value="Novo"
+				icon="ui-icon-person" action="#{ReeducandoControl.LimparCamposReeducando}">
+				<f:param name="i" value="1" />
+			</p:menuitem>
+
+			<p:menuitem value="Lista" outcome="reeducandolista.jsf"
+				icon="ui-icon-search">
+				<f:param name="i" value="0" />
+			</p:menuitem>
+		</p:tabMenu>
+
+		<p:panel>
+			<h2 style="margin-top: 0" align="center">Reeducando</h2>
+			<p:dataTable id="reeducandos"
+				value="#{ReeducandoControl.reeducandos}" var="reed" width="100%"
+				emptyMessage="Sem registros" paginator="true" rows="10"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15">
+
+				<f:facet name="header">
+					<h:outputText value="Lista de Reeducandos"></h:outputText>
+				</f:facet>
+
+
+				<p:column style="width:16px" headerText="Detalhes">
+					<p:rowToggler />
+				</p:column>
+
+				<p:column sortBy="#{reed.nome }" filterBy="#{reed.nome}"
+					headerText="Nome" footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Nome"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{reed.nome}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{reed.rg}" filterBy="#{reed.rg}"
+					headerText="Nome" footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Rg"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{reed.rg}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{reed.cpf}" filterBy="#{reed.cpf}"
+					headerText="Nome" footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Cpf"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{reed.cpf}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{reed.alcunha.apelido}"
+					filterBy="#{reed.alcunha.apelido}" headerText="Nome"
+					footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Apelido"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{reed.alcunha.apelido}"></h:outputText>
+				</p:column>
+				<!-- CAMPO DE INCLUIR NOVO HISTORICO DE REEDUCANDO -->
+				<p:column headerText="Opções">
+					<p:menuButton value="Opções">
+						<p:menuitem value="Historico"
+							action="#{ReeducandoControl.contruirlistareeducando}"
+							icon="ui-icon-disk">
+							<f:setPropertyActionListener
+								target="#{ReeducandoControl.reeducando}" value="#{reed}"></f:setPropertyActionListener>
+						</p:menuitem>
+
+						<p:menuitem value="Atualizar Dados" id="abrirupdadereed"
+							icon="ui-icon-arrowrefresh-1-w" action="reeducandoupdate.jsf" ajax="false">
+							<f:setPropertyActionListener
+								target="#{ReeducandoControl.reeducando}" value="#{reed}"></f:setPropertyActionListener>
+						</p:menuitem>
+
+					</p:menuButton>
+
+				</p:column>
+				<!-- CAMPO DE LINHA DE EXPANSAO -->
+				<p:rowExpansion>
+					<p:panelGrid columns="2" columnClasses="label,value"
+						style="width:300px">
+
+						<h:outputText value="Nome:" />
+						<h:outputText value="#{reed.nome}" />
+
+						<h:outputText value="Nome do Pai:" />
+						<h:outputText value="#{reed.nomedopai}" />
+
+						<h:outputText value="Nome da Mãe" />
+						<h:outputText value="#{reed.nomedamae}" />
+
+						<h:outputText value="Apelido(Alcunha):" />
+						<h:outputText value="#{reed.alcunha.apelido}" />
+
+						<h:outputText value="Rg:" />
+						<h:outputText value="#{reed.rg}" />
+
+						<h:outputText value="Cpf" />
+						<h:outputText value="#{reed.cpf}" />
+
+						<h:outputText value="Endereço:" />
+						<h:outputText value="" />
+						<h:outputText value="Logradouro:" />
+						<h:outputText value="#{reed.endereco.logradouro}" />
+						<h:outputText value="Complemento:" />
+						<h:outputText value="#{reed.endereco.complemento}" />
+						<h:outputText value="Setor:" />
+						<h:outputText value="#{reed.endereco.setor}" />
+						<h:outputText value="Cidade:" />
+						<h:outputText value="#{reed.endereco.cidade}" />
+						<h:outputText value="Estado:" />
+						<h:outputText value="#{reed.endereco.estado}" />
+						<h:outputText value="Cep:" />
+						<h:outputText value="#{reed.endereco.cep}" />
+					</p:panelGrid>
+				</p:rowExpansion>
+			</p:dataTable>
+		</p:panel>
+	</ui:define>
+</ui:composition>

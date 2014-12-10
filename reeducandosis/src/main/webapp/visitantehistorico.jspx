@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+
+		<!-- MENU COM ABAS -->
+
+		<p:panel header="VISITANTE">
+			<p:toolbarGroup align="left">
+				<p:commandButton value="Nova Visita" id="visitanew"
+					onclick="dlgVisitantes.show()" />
+				<p:commandButton value="Voltar aos Visitantes" immediate="true"
+					action="visitantelista">
+				</p:commandButton>
+			</p:toolbarGroup>
+		</p:panel>
+
+		<p:panel position="west" size="200" rendered="true" collapsible="true"
+			resizable="true" closable="false" id="panelhist">
+			<h2 style="margin-top: 0" align="center">Visitante</h2>
+
+			<p:dataTable id="historicos" value="#{VisitanteControl.historicos}"
+				var="hist" emptyMessage="Sem registros" paginator="true" rows="10"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15">
+
+				<f:facet name="header">
+					<h:outputText value="Lista das Visitas do: "></h:outputText>
+					<h:outputText value="#{VisitanteControl.visitante.nome}"></h:outputText>
+				</f:facet>
+
+
+				<p:column headerText="Descrição Detalhes">
+					<p:rowToggler/>
+				</p:column>
+
+				<p:column sortBy="#{hist.dtHistorico}"
+					filterBy="#{hist.dtHistorico}" headerText="Data da Visita"
+					footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Data da Visita:"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{hist.dtHistorico}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{hist.reeducando.nome}"
+					filterBy="#{hist.reeducando.nome}" headerText="Reeducando"
+					footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Reeducando"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{hist.reeducando.nome}"></h:outputText>
+				</p:column>
+
+				<!-- CAMPO DE LINHA DE EXPANSAO DETAHES DESCRICAO -->
+				<p:rowExpansion >
+				<h:form style="font-weight: bolder;">
+					<p:panelGrid columns="2" columnClasses="label,value" 
+						style="width:750px">
+						<h:outputText value="DESCRICAO" />
+						<p:inputTextarea  rows="5" cols="75" style="width: 100%"
+							value="#{hist.descricao}" queryDelay="750"
+							minQueryLength="4" disabled="true"/>
+					</p:panelGrid>
+					</h:form>
+				</p:rowExpansion>
+			</p:dataTable>
+
+		</p:panel>
+
+		<!-- TELA DE DIALOGO DE INCLUSAO DE VISITA -->
+
+		<p:dialog widgetVar="dlgVisitantes" resizable="false"
+			header="Incluir Visita" hideEffect="explode" wappendToBody="true"
+			width="500" modal="true">
+			<p:panel>
+				<h:panelGrid columns="2" width="400" columnClasses="label, value">
+
+					<h:outputText style="font-size: 14px" value="Nome:"></h:outputText>
+					<p:inputText id="nomevisitante"
+						value="#{VisitanteControl.visitante.nome}" disabled="true"
+						style="width: 100%"></p:inputText>
+					<h:outputText value="Descrição:" style="font-size: 14px"></h:outputText>
+					<p:inputTextarea rows="10" cols="75" style="width: 100%"
+						value="#{VisitanteControl.historico.descricao}" queryDelay="750"
+						minQueryLength="4" />
+					<h:outputText value="Reeducando:" for="breedu"
+						style="font-size: 14px" />
+
+					<p:autoComplete id="breedu" value="#{VisitanteControl.reedNome}"
+						completeMethod="#{VisitanteControl.completaReeducando}"
+						var="reeducando" itemLabel="#{reeducando.nome}"
+						itemValue="#{reeducando}" converter="reeducandoConverter"
+						forceSelection="true"
+						onkeyup="this.value = this.value.toLowerCase();" size="200" />
+
+					<p:watermark value="pesquise pelo nome" for="breedu"></p:watermark>
+
+					<p:commandButton
+						actionListener="#{VisitanteControl.incluirHistorico}"
+						value="Confirmar" update="historicos, panelhist"
+						onclick="dlgVisitantes.close()"></p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

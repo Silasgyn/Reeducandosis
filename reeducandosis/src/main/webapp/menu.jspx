@@ -1,0 +1,20 @@
+<div class="header">
+	<div class="container">
+		<div class="row branding">
+			<div class="span6">
+				<h1 class="pull-left">
+					<a href="inicio.jsf"><strong>ReeducandoSis</strong></a>
+				</h1>
+			</div>
+		</div>
+		<div class="row navigation">
+			<div class="span12">
+				<ul class="nav nav-tabs">
+					<li><a href="inicio.jsf">Inicio</a></li>
+					<li><a href="reeducandolista.jsf">Reeducandos</a></li>
+					<li><a href="visitantelista.jsf">Visitantes</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

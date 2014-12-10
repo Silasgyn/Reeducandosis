@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context displayName="reeducandosis" path="/reeducandosis" reloadable="true">
+
+   <Resource 
+      auth="Container" 
+      driverClassName="org.postgresql.Driver"
+      maxActive="10" 
+      maxIdle="3" 
+      name="jdbc/reeducandosis" 
+      password="root"
+      type="javax.sql.DataSource" 
+      url="jdbc:postgresql://localhost/reeducandosis"
+      username="postgres" />
+
+</Context>

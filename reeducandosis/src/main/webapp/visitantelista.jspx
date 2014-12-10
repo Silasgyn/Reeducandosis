@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="corpo">
+
+		<!-- MENU COM ABAS -->
+		<p:tabMenu activeIndex="#{param.i}">
+			<p:menuitem value="Novo" action="#{VisitanteControl.LimparCamposVisitante}"
+				icon="ui-icon-person" ajax="false">
+				<f:param name="i" value="1" />
+			</p:menuitem>
+
+			<p:menuitem value="Lista" outcome="visitantelista.jsf"
+				icon="ui-icon-search">
+				<f:param name="i" value="0" />
+			</p:menuitem>
+		</p:tabMenu>
+
+		<!-- PAINEL DE LISTA -->
+		<p:panel>
+			<h2 style="margin-top: 0" align="center">Visitante</h2>
+			<p:dataTable id="visitantes" value="#{VisitanteControl.visitantes}"
+				var="visit" width="100%" emptyMessage="Sem registros"
+				paginator="true" rows="10"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15">
+
+				<f:facet name="header">
+					<h:outputText value="Lista de Visitantes"></h:outputText>
+				</f:facet>
+
+				<p:column style="width:16px" headerText="Detalhes">
+					<p:rowToggler />
+				</p:column>
+
+				<p:column sortBy="#{visit.nome }" filterBy="#{visit.nome}"
+					headerText="Nome" footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Nome"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{visit.nome}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{visit.cpf}" filterBy="#{visit.cpf}"
+					headerText="Cpf" footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Cpf:"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{visit.cpf}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{visit.parentesco}"
+					filterBy="#{visit.parentesco}" headerText="Parentesco"
+					footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Parentesco"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{visit.parentesco}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{visit.telefone}" filterBy="#{visit.telefone}"
+					headerText="Nome" footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Telefone"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{visit.telefone}"></h:outputText>
+				</p:column>
+				<!-- CAMPO DE INCLUIR NOVO HISTORICO DE VISITANTE -->
+				<p:column headerText="Opções">
+					<p:menuButton value="Opções">
+						<p:menuitem value="Historico/Visitas"
+							action="#{VisitanteControl.construirLista}" icon="ui-icon-disk">
+							<f:setPropertyActionListener
+								target="#{VisitanteControl.visitante}" value="#{visit}"></f:setPropertyActionListener>
+						</p:menuitem>
+						<p:menuitem value="Atualizar Dados" id="openvisit"
+							icon="ui-icon-arrowrefresh-1-w" action="#{VisitanteControl.abrirUpateVisitante}" ajax="false">
+							<f:setPropertyActionListener
+								target="#{VisitanteControl.visitante}" value="#{visit}"></f:setPropertyActionListener>
+						</p:menuitem>
+
+
+					</p:menuButton>
+				</p:column>
+
+				<!-- CAMPO DE LINHA DE EXPANSAO -->
+
+				<p:rowExpansion>
+					<p:panelGrid columns="2" columnClasses="label,value"
+						style="width:300px">
+						<h:outputText value="Nome:" />
+						<h:outputText value="#{visit.nome}" />
+						<h:outputText value="Cpf:" />
+						<h:outputText value="#{visit.cpf}" />
+						<h:outputText value="Telefone:" />
+						<h:outputText value="#{visit.telefone}.telefone}" />
+						<h:outputText value="Endereço:" />
+						<h:outputText value="" />
+						<h:outputText value="Logradouro:" />
+						<h:outputText value="#{visit.endereco.logradouro}" />
+						<h:outputText value="Complemento:" />
+						<h:outputText value="#{visit.endereco.complemento}" />
+						<h:outputText value="Setor:" />
+						<h:outputText value="#{visit.endereco.setor}" />
+						<h:outputText value="Cidade:" />
+						<h:outputText value="#{visit.endereco.cidade}" />
+						<h:outputText value="Estado:" />
+						<h:outputText value="#{visit.endereco.estado}" />
+						<h:outputText value="Cep:" />
+						<h:outputText value="#{visit.endereco.cep}" />
+					</p:panelGrid>
+				</p:rowExpansion>
+			</p:dataTable>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+
+
+
+
+

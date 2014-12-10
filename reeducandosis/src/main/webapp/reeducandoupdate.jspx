@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		<p:tabMenu activeIndex="#{param.i}">
+			<p:menuitem value="Novo" outcome="reeducando.jsf"
+				icon="ui-icon-person">
+				<f:param name="i" value="1" />
+			</p:menuitem>
+
+			<p:menuitem value="Lista" outcome="reeducandolista.jsf"
+				icon="ui-icon-search">
+				<f:param name="i" value="0" />
+			</p:menuitem>
+		</p:tabMenu>
+		<h2 style="margin-top: 0" align="center">Atualizar Dados do
+			Reeducando</h2>
+		<p:panel>
+			<p:accordionPanel>
+				<p:messages />
+				<p:tab title="Dados Pessoais">
+					<h:panelGrid columns="3">
+						<h:outputText value="Nome:"></h:outputText>
+						<p:inputText id="Nomedialog"
+							value="#{ReeducandoControl.reeducando.nome}"
+						required="true" requiredMessage="campo nome é obrigatório" ></p:inputText>
+						<p:message for="Nomedialog" />
+						<h:outputText value="Cpf:"></h:outputText>
+						<p:inputMask id="cpfdialog"
+							value="#{ReeducandoControl.reeducando.cpf}" mask="999.999.999-99"
+							requiredMessage="campo cpf é obrigatório" required="true" ></p:inputMask>
+						<p:message for="cpfdialog" />
+						<h:outputText value="Rg:"></h:outputText>
+						<p:inputMask id="rgdialgog"
+							value="#{ReeducandoControl.reeducando.rg}" mask="9999-999"
+							maxlength="7" requiredMessage="campo rg é obrigatório" required="true" ></p:inputMask>
+						<p:message for="rgdialgog" />
+						<h:outputText value="Alcunha:"></h:outputText>
+						<h:inputText
+							value="#{ReeducandoControl.reeducando.alcunha.apelido}"
+							maxlength="40" id="Alcunhadialogo"></h:inputText>
+						<p/>
+						<h:outputText value="Nome do Pai:"></h:outputText>
+						<h:inputText value="#{ReeducandoControl.reeducando.nomedopai}"
+							maxlength="40" ></h:inputText>
+						<p/>
+						<h:outputText value="Nome da Mãe:"></h:outputText>
+						<h:inputText value="#{ReeducandoControl.reeducando.nomedamae}"
+							maxlength="40" id="NomedaMaedialog"
+						requiredMessage="campo nome da mãe é obrigatório" required="true"></h:inputText>
+						<p:message for="NomedaMaedialog" />
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab title="Endereço">
+					<h:panelGrid columns="3">
+
+						<h:outputText value="Logradouro:"></h:outputText>
+						<h:inputText id="logradouro"
+							value="#{ReeducandoControl.reeducando.endereco.logradouro}"
+						requiredMessage="campo logradouro é obrigatório" required="true"></h:inputText>
+						<p:message for="logradouro" />
+						<h:outputText value="Complemento:"></h:outputText>
+						<h:inputText id="complemento"
+							value="#{ReeducandoControl.reeducando.endereco.complemento}"
+							requiredMessage="campo complemento é obrigatório" required="true"></h:inputText>
+						<p:message for="complemento" />
+						<h:outputText value="Setor:"></h:outputText>
+						<h:inputText id="setor"
+							value="#{ReeducandoControl.reeducando.endereco.setor}"
+						requiredMessage="campo setor é obrigatório" required="true"></h:inputText>
+						<p:message for="setor" />
+						<h:outputText value="Cidade:"></h:outputText>
+						<h:inputText maxlength="40" id="cidade"
+							value="#{ReeducandoControl.reeducando.endereco.cidade}"
+						requiredMessage="campo cidade é obrigatório" required="true"></h:inputText>
+						<p:message for="cidade" />
+						<h:outputText value="Estado:"></h:outputText>
+						<h:inputText maxlength="2" id="estado"
+							value="#{ReeducandoControl.reeducando.endereco.estado}"
+						requiredMessage="campo estado é obrigatório" required="true"></h:inputText>
+						<p:message for="estado" />
+						<h:outputText value="Cep:"></h:outputText>
+						<p:inputMask id="cep" 
+							value="#{ReeducandoControl.reeducando.endereco.cep}"
+							mask="99999-999" requiredMessage="campo cep é obrigatório" required="true"></p:inputMask>
+							<p:message for="cep" />
+					</h:panelGrid>
+				</p:tab>
+			</p:accordionPanel>
+			<h:panelGrid columns="2">
+				<p:commandButton
+					actionListener="#{ReeducandoControl.AtualizarDados}"
+					value="Confirmar" action="reeducandolista.jsf"></p:commandButton>
+				<p:commandButton
+					actionListener="#{ReeducandoControl.CancelarUpdate}"
+					value="Cancelar" action="reeducandolista.jsf" />
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

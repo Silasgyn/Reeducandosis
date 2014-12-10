@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://www.ambientinformatica.com.br/jsf2"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+
+		<!-- MENU COM ABAS -->
+
+		<p:panel header="REEDUCANDO">
+			<p:toolbarGroup align="left">
+				<p:commandButton value="Novo Histórico" id="reeducandonew"
+					onclick="dlgReeducando.show()" />
+				<p:commandButton value="Voltar aos Reeducandos" immediate="true"
+					action="reeducandolista" />
+			</p:toolbarGroup>
+		</p:panel>
+
+		<p:panel position="west" size="200" rendered="true" collapsible="true"
+			resizable="true" closable="false" id="panelhist">
+			<h2 style="margin-top: 0" align="center">Reeducando</h2>
+
+			<p:dataTable id="historicos" value="#{ReeducandoControl.historicos}"
+				var="historico" width="100%" emptyMessage="Sem registros"
+				paginator="true" rows="10"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15">
+
+				<f:facet name="header">
+					<h:outputText value="Lista de Histórico do: "></h:outputText>
+					<h:outputText value="#{ReeducandoControl.reeducando.nome}"></h:outputText>
+				</f:facet>
+
+				<p:column headerText="Descrição Detalhes">
+					<p:rowToggler />
+				</p:column>
+
+				<p:column sortBy="#{historico.regime}"
+					filterBy="#{historico.regime}" headerText="Regime"
+					footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Regime"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{historico.regime}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{historico.dtHistorico}"
+					filterBy="#{historico.dtHistorico}" headerText="Data de Histórico"
+					footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Data de Histórico"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{historico.dtHistorico}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{historico.cela.unidadePrisional}"
+					filterBy="#{historico.cela.unidadePrisional}" headerText="Cela"
+					footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Cela"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{historico.cela.unidadePrisional}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{historico.visitante.nome}"
+					filterBy="#{historico.visitante.nome}" headerText="Visitante"
+					footerText="resultado" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Visitante"></h:outputText>
+					</f:facet>
+					<h:outputText value="#{historico.visitante.nome}"></h:outputText>
+				</p:column>
+
+				<!-- CAMPO DE LINHA DE EXPANSAO DETAHES DESCRICAO -->
+				<p:rowExpansion>
+					<h:form style="font-weight: bolder;">
+						<p:panelGrid columns="2" columnClasses="label,value"
+							style="width:750px">
+							<h:outputText value="DESCRICAO:" />
+							<p:inputTextarea rows="5" cols="75" style="width: 100%"
+								value="#{historico.descricao}" queryDelay="750"
+								minQueryLength="4" disabled="true" />
+							<h:outputText value="CELA:" />
+							<h:outputText value="#{historico.cela.numerodacela}" />
+						</p:panelGrid>
+					</h:form>
+				</p:rowExpansion>
+
+
+			</p:dataTable>
+
+		</p:panel>
+
+		<!-- TELA DE DIALOGO DE INCLUSAO DE HISTORICO REEDUCANDO -->
+
+		<p:dialog widgetVar="dlgReeducando" resizable="false"
+			header="Incluir Histórico" hideEffect="explode" wappendToBody="true"
+			width="500" modal="true">
+			<p:panel>
+				<h:panelGrid columns="2" columnClasses="label, value" width="400">
+					<h:outputText value="Descriçao" style="font-size: 14px"></h:outputText>
+					<p:inputTextarea rows="10" cols="74" style="width: 100%"
+						value="#{ReeducandoControl.historico.descricao}" queryDelay="750"
+						minQueryLength="4" />
+					<h:outputLabel style="font-size: 14px" value="Regime"
+						for="cbRegime" />
+					<h:panelGroup>
+						<h:selectOneMenu id="cbRegime"
+							value="#{ReeducandoControl.historico.regime}">
+							<f:selectItem itemLabel="--Nenhum--" itemValue="" />
+							<f:selectItems value="#{ReeducandoControl.regimes}" />
+						</h:selectOneMenu>
+					</h:panelGroup>
+					<h:outputText value="Unidade Prisional" style="font-size: 14px"></h:outputText>
+					<h:inputText maxlength="40" size="70"
+						value="#{ReeducandoControl.historico.cela.unidadePrisional}"></h:inputText>
+					<h:outputText value="Cela:" style="font-size: 14px"></h:outputText>
+					<p:inputMask  
+						value="#{ReeducandoControl.historico.cela.numerodacela}"
+						mask="999" id="numcela"></p:inputMask>
+
+					<h:outputText></h:outputText>
+					<p:commandButton
+						actionListener="#{ReeducandoControl.incluirHistorico}"
+						value="Confirmar" update="historicos, panelhist" 
+						onclick="dlgReeducando.close()"></p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+		</p:dialog>
+
+
+	</ui:define>
+</ui:composition>
